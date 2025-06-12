@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_tea_ghar/screens/authenticate/authenticate.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({super.key});

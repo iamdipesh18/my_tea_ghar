@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  
   //we need method to register
 
   //we need to create a method to sign in with both email and anonymous methods
@@ -30,6 +31,7 @@ class AuthService {
       return null;
     }
   }
+
 
   //sign in with email
 
