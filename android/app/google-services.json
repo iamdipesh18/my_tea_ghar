@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1063224841311",
+    "project_id": "my-tea-ghar",
+    "storage_bucket": "my-tea-ghar.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1063224841311:android:18f7f9951017c5eb51f7ea",
+        "android_client_info": {
+          "package_name": "com.diptech.my_tea_ghar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD94sqdbl3tUb7X36NlTcwwvpQoqHx1AME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
