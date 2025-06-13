@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_tea_ghar/services/auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -25,7 +24,7 @@ class _SignInState extends State<SignIn> {
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 50),
         child: ElevatedButton(
           onPressed: () async {
-            dynamic result = _auth.signInAnon();
+            dynamic result = await _auth.signInAnon();
             if (result == null) {
               print("Error Signing In");
             } else {

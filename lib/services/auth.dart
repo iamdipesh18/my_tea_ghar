@@ -21,7 +21,7 @@ class AuthService {
     }
   }
 */
-  Future<User?> signInAnon() async {
+  Future signInAnon() async {
     try {
       UserCredential result = await _auth.signInAnonymously();
       User? user = result.user;

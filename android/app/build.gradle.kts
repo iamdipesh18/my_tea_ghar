@@ -10,7 +10,7 @@ plugins {
 android {
     namespace = "com.example.my_tea_ghar"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -23,7 +23,7 @@ android {
 
     defaultConfig {
         applicationId = "com.diptech.my_tea_ghar"
-        minSdk = flutter.minSdkVersion
+        minSdk = 23
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -35,6 +35,7 @@ android {
         }
     }
 }
+
 
 flutter {
     source = "../.."
