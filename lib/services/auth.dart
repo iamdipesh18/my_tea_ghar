@@ -1,37 +1,36 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:my_tea_ghar/models/user.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  
   //we need method to register
 
   //we need to create a method to sign in with both email and anonymous methods
 
-  //sign in anonymously
+  //Creating user object based upon the firebase User
   /*
-  Future signInAnon() async {
-    try {
-      AuthResult result = await _auth.signInAnonymously();
-      FirebaseUser user = result.user;
-      return user;
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
+  User _userFromFirebaseUser(Firebase user){
+    return user!=null? User(uid:user.uid ):null;
   }
 */
-  Future signInAnon() async {
+  MyUser? _userFromFirebaseUser(User? user) {
+    return user != null ? MyUser(user.uid) : null;
+  }
+
+  //sign in anonymously
+   Future<MyUser?> signInAnon() async {
     try {
-      UserCredential result = await _auth.signInAnonymously();
-      User? user = result.user;
-      return user;
+      firebase_auth.UserCredential result = await _auth.signInAnonymously();
+      firebase_auth.User? user = result.user;
+      return _userFromFirebaseUser(user);
     } catch (e) {
-      print(e.toString());
+      print('Error signing in anonymously: $e');
       return null;
     }
   }
-
 
   //sign in with email
 
