@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_tea_ghar/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
-
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -11,17 +10,17 @@ class AuthService {
   //we need to create a method to sign in with both email and anonymous methods
 
   //Creating user object based upon the firebase User
-  /*
-  User _userFromFirebaseUser(Firebase user){
-    return user!=null? User(uid:user.uid ):null;
-  }
-*/
   MyUser? _userFromFirebaseUser(User? user) {
     return user != null ? MyUser(user.uid) : null;
   }
 
+  //Auth Change User Stream
+  Stream<MyUser?> get user {
+    return _auth.authStateChanges().map(_userFromFirebaseUser);
+  }
+
   //sign in anonymously
-   Future<MyUser?> signInAnon() async {
+  Future<MyUser?> signInAnon() async {
     try {
       firebase_auth.UserCredential result = await _auth.signInAnonymously();
       firebase_auth.User? user = result.user;
