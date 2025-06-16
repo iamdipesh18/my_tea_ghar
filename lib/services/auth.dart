@@ -6,14 +6,43 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   //we need method to register
-
+  /*  Future registerWithEmailAndPassword(String email, String password) async {
+    try {
+      AuthResult result = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      )
+      FirebaseUser user=result.user;
+      return _userFromFirebaseUser(user);
+    } catch (e) {
+      print(e.toString());
+      return(null);
+    }
+  }
+*/
+  // Register with email & password
+  Future<MyUser?> registerWithEmailAndPassword(
+    String email,
+    String password,
+  ) async {
+    try {
+      UserCredential result = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      User? user = result.user;
+      return _userFromFirebaseUser(user);
+    } catch (e) {
+      print('Error registering: $e');
+      return null;
+    }
+  }
   //we need to create a method to sign in with both email and anonymous methods
 
   //Creating user object based upon the firebase User
   MyUser? _userFromFirebaseUser(User? user) {
     return user != null ? MyUser(user.uid) : null;
   }
-
 
   //Auth Change User Stream
   Stream<MyUser?> get user {
