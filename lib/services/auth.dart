@@ -1,25 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_tea_ghar/models/user.dart';
-import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:my_tea_ghar/services/database.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  //we need method to register
-  /*  Future registerWithEmailAndPassword(String email, String password) async {
-    try {
-      AuthResult result = await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      )
-      FirebaseUser user=result.user;
-      return _userFromFirebaseUser(user);
-    } catch (e) {
-      print(e.toString());
-      return(null);
-    }
+  // Convert Firebase User to Custom User
+  MyUser? _userFromFirebaseUser(User? user) {
+    return user != null ? MyUser(user.uid) : null;
   }
-*/
+
+  // Auth Change User Stream
+  Stream<MyUser?> get user {
+    return _auth.authStateChanges().map(_userFromFirebaseUser);
+  }
+
   // Register with email & password
   Future<MyUser?> registerWithEmailAndPassword(
     String email,
@@ -31,38 +26,20 @@ class AuthService {
         password: password,
       );
       User? user = result.user;
+
+      await DatabaseService(
+        uid: user!.uid,
+      ).updateUserData('0', 'new crew member', 100);
+
       return _userFromFirebaseUser(user);
     } catch (e) {
       print('Error registering: $e');
       return null;
     }
   }
-  //we need to create a method to sign in with both email and anonymous methods
 
-  //Creating user object based upon the firebase User
-  MyUser? _userFromFirebaseUser(User? user) {
-    return user != null ? MyUser(user.uid) : null;
-  }
-
-  //Auth Change User Stream
-  Stream<MyUser?> get user {
-    return _auth.authStateChanges().map(_userFromFirebaseUser);
-  }
-
-  //sign in anonymously
-  Future<MyUser?> signInAnon() async {
-    try {
-      firebase_auth.UserCredential result = await _auth.signInAnonymously();
-      firebase_auth.User? user = result.user;
-      return _userFromFirebaseUser(user);
-    } catch (e) {
-      print('Error signing in anonymously: $e');
-      return null;
-    }
-  }
-
-  //sign in with email and password
-    Future<MyUser?> signInWithEmailAndPassword(
+  // Sign in with email & password
+  Future<MyUser?> signInWithEmailAndPassword(
     String email,
     String password,
   ) async {
@@ -74,20 +51,29 @@ class AuthService {
       User? user = result.user;
       return _userFromFirebaseUser(user);
     } catch (e) {
-      print('Error registering: $e');
+      print('Error signing in: $e');
       return null;
     }
   }
 
-
-
-  //we also need sign out method
-  Future signOut() async {
+  // Sign in anonymously
+  Future<MyUser?> signInAnon() async {
     try {
-      return await _auth.signOut();
+      UserCredential result = await _auth.signInAnonymously();
+      User? user = result.user;
+      return _userFromFirebaseUser(user);
     } catch (e) {
-      print(e.toString());
-      return (null);
+      print('Error signing in anonymously: $e');
+      return null;
+    }
+  }
+
+  // Sign out
+  Future<void> signOut() async {
+    try {
+      await _auth.signOut();
+    } catch (e) {
+      print('Error signing out: $e');
     }
   }
 }
