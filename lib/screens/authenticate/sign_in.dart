@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:my_tea_ghar/services/auth.dart';
 
 class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+  
+  final Function toggleView;
+  const SignIn({super.key, required this.toggleView}); // ✅ Named parameter
 
   @override
   State<SignIn> createState() => _SignInState();
@@ -22,7 +24,30 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
-        title: Text('Sign In to My Tea Ghar'),
+        title: Text('Sign In to My Tea Ghar',
+              style: TextStyle(
+              color: Colors.white,
+              fontSize: 20.0, // Optional: you can set font size here
+              fontWeight: FontWeight.bold, // Optional: bold text
+              ),
+        ),
+        centerTitle: true,
+        actions: <Widget>[
+          TextButton.icon(
+            icon:Icon(Icons.person),
+            onPressed: (){
+              widget.toggleView();
+
+            },
+            label:Text('Register',
+                   style: TextStyle(
+              color: Colors.black,
+              fontSize: 20.0, // Optional: you can set font size here
+              fontWeight: FontWeight.bold, // Optional: bold text
+              ),
+              ),
+          )
+        ],
       ),
       /*
       //For Anonymous Sign In

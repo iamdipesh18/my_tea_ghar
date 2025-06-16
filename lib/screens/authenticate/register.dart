@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:my_tea_ghar/services/auth.dart';
 
 class Register extends StatefulWidget {
-  
+final Function toggleView;
+  const Register({super.key, required this.toggleView}); // ✅ Named parameter
   @override
   State<Register> createState() => _RegisterState();
 }
 
 class _RegisterState extends State<Register> {
-  final AuthService _auth = AuthService();  
+  final AuthService _auth = AuthService();
   //text field state
   String email = '';
   String password = '';
@@ -19,14 +20,31 @@ class _RegisterState extends State<Register> {
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
-        title: Text('Sign Up to My Tea Ghar',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 20.0, // Optional: you can set font size here
-         fontWeight: FontWeight.bold, // Optional: bold text
+        title: Text(
+          'Sign Up to My Tea Ghar',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20.0, // Optional: you can set font size here
+            fontWeight: FontWeight.bold, // Optional: bold text
+          ),
         ),
-        ),
-        centerTitle : true,
+        centerTitle: true,
+        actions: <Widget>[
+          TextButton.icon(
+            icon: Icon(Icons.person),
+            onPressed: () {
+              widget.toggleView();
+            },
+            label: Text(
+              'Sign In',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20.0, // Optional: you can set font size here
+                fontWeight: FontWeight.bold, // Optional: bold text
+              ),
+            ),
+          ),
+        ],
       ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
