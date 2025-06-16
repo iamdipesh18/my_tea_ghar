@@ -6,20 +6,28 @@ import 'package:provider/provider.dart';
 import 'package:my_tea_ghar/models/user.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // Required before Firebase init
-  await Firebase.initializeApp(); // Initialize Firebase
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  final authService = AuthService();
+
+  runApp(
+    StreamProvider<MyUser?>.value(
+      value: authService.user,
+      initialData: null,
+      child: MyApp(authService: authService),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final AuthService authService;
+  const MyApp({super.key, required this.authService});
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<MyUser?>.value(
-      value: AuthService().user,
-      initialData: null,
-      child: MaterialApp(home: Wrapper()),
+    return MaterialApp(
+      home: Wrapper(),
     );
   }
 }
