@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:my_tea_ghar/services/auth.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({super.key});
-
+class Register extends StatefulWidget {
+  
   @override
-  State<SignIn> createState() => _SignInState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
-  final AuthService _auth = AuthService();
-
+class _RegisterState extends State<Register> {
+  final AuthService _auth = AuthService();  
   //text field state
   String email = '';
   String password = '';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,27 +19,15 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
-        title: Text('Sign In to My Tea Ghar'),
-      ),
-      /*
-      //For Anonymous Sign In
-      body: Container(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-        child: ElevatedButton(
-          onPressed: () async {
-            dynamic result = await _auth.signInAnon();
-            if (result == null) {
-              print("Error Signing In");
-            } else {
-              print("Siged In");
-              print(result.uid);
-            }
-          },
-          child: Text('Sign In Anonymously'),
+        title: Text('Sign Up to My Tea Ghar',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 20.0, // Optional: you can set font size here
+         fontWeight: FontWeight.bold, // Optional: bold text
         ),
+        ),
+        centerTitle : true,
       ),
-      //For Anonymous Sign In 
-      */
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
         child: Form(
