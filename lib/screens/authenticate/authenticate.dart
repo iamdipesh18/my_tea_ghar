@@ -4,7 +4,7 @@ import 'package:my_tea_ghar/screens/authenticate/sign_in.dart';
 
 class Authenticate extends StatefulWidget {
   const Authenticate({super.key});
-  
+
   @override
   State<Authenticate> createState() => _AuthenticateState();
 }
