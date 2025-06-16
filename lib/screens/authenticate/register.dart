@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_tea_ghar/services/auth.dart';
 import 'package:my_tea_ghar/shared/constants.dart';
-import 'package:lottie/lottie.dart';
 import 'package:my_tea_ghar/shared/loading.dart';
 
 class Register extends StatefulWidget {
