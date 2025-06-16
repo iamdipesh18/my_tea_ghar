@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:my_tea_ghar/models/brew.dart';
 
 class DatabaseService {
   final String uid;
@@ -16,8 +17,22 @@ class DatabaseService {
     });
   }
 
-  //Get Brews Stream
-  Stream<QuerySnapshot> get brews {
-    return brewCollection.snapshots();
-  }
+// Convert snapshot to list of Brew
+List<Brew> _brewListFromSnapshot(QuerySnapshot snapshot) {
+  return snapshot.docs.map((doc) {
+    // Make sure to use `doc.data()` and cast as Map
+    final data = doc.data() as Map<String, dynamic>;
+    return Brew(
+      name: data['name'] ?? '',
+      strength: data['strength'] ?? 0,
+      sugars: data['sugars'] ?? '0',
+    );
+  }).toList();
+}
+
+// Get Brews Stream
+Stream<List<Brew>> get brews {
+  return brewCollection.snapshots().map(_brewListFromSnapshot);
+}
+
 }
