@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:my_tea_ghar/models/brew.dart';
+import 'package:my_tea_ghar/screens/home/brew_tile.dart';
 
 class BrewList extends StatefulWidget {
   const BrewList({super.key});
@@ -20,11 +20,16 @@ class _BrewListState extends State<BrewList> {
     if (brews == null) {
       return Center(child: CircularProgressIndicator());
     }
-    brews.forEach((brew) {
+    for (var brew in brews) {
       print(brew.name);
       print(brew.sugars);
       print(brew.strength);
-    });
-    return const Placeholder();
+    }
+    return ListView.builder(
+      itemCount: brews.length,
+      itemBuilder: (context, index) {
+        return BrewTile(brew: brews[index]);
+      },
+    );
   }
 }

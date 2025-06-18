@@ -5,7 +5,6 @@ import 'package:my_tea_ghar/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:my_tea_ghar/screens/home/brew_list.dart';
 import 'package:my_tea_ghar/models/user.dart'; // You need to import your MyUser model
-import 'package:my_tea_ghar/models/brew.dart';
 
 class Home extends StatelessWidget {
   Home({super.key});
@@ -15,13 +14,27 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<MyUser?>(context);
+    void _showSettingsPanel() {
+      showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            padding: const EdgeInsetsGeometry.symmetric(
+              vertical: 20,
+              horizontal: 60,
+            ),
+            child: Text('bottom sheet'),
+          );
+        },
+      );
+    }
 
     if (user == null) {
       return Center(child: CircularProgressIndicator());
     }
     return StreamProvider<List<Brew>>.value(
-    value: DatabaseService(uid: user.uid).brews,
-    initialData: [],
+      value: DatabaseService(uid: user.uid).brews,
+      initialData: [],
       child: Scaffold(
         backgroundColor: Colors.brown[50],
         appBar: AppBar(
@@ -35,6 +48,11 @@ class Home extends StatelessWidget {
               onPressed: () async {
                 await _auth.signOut();
               },
+            ),
+            TextButton.icon(
+              icon: Icon(Icons.settings, color: Colors.black),
+              label: Text('settings', style: TextStyle(color: Colors.black)),
+              onPressed: () => _showSettingsPanel(),
             ),
           ],
         ),
