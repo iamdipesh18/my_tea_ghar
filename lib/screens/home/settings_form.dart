@@ -13,11 +13,12 @@ class SettingsForm extends StatefulWidget {
 class _SettingsFormState extends State<SettingsForm> {
   final _formKey = GlobalKey<FormState>();
   final List<String> sugars = ['0', '1', '2', '3', '4'];
-
-  //form values
+  //Form Variables
   String? _currentName;
   String? _currentSugars;
   int? _currentStrength;
+  
+  bool _initialized = false;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +26,17 @@ class _SettingsFormState extends State<SettingsForm> {
 
     return StreamBuilder<UserData>(
       stream: DatabaseService(uid: user.uid).userData,
-      builder: (context, asyncSnapshot) {
-        if (asyncSnapshot.hasData) {
-          UserData userData = asyncSnapshot.data!;
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          UserData userData = snapshot.data!;
+
+          // Initialize form fields only once on first data load
+          if (!_initialized) {
+            _currentName = userData.name;
+            _currentSugars = userData.sugars;
+            _currentStrength = userData.strength;
+            _initialized = true;
+          }
 
           return Form(
             key: _formKey,
@@ -38,15 +47,8 @@ class _SettingsFormState extends State<SettingsForm> {
                   style: TextStyle(fontSize: 18),
                 ),
                 SizedBox(height: 20),
-                /*
-              TextFormField(
-                decoration: textInputDecoration,
-                validator:
-                    (val) => (val?.isEmpty ?? true) ? 'Please Enter a Name' : null,
-        
-                onChanged: (val) => setState(() => _currentName = val),
-              ),
-              */
+
+                // Name input
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -60,7 +62,7 @@ class _SettingsFormState extends State<SettingsForm> {
                     ),
                     const SizedBox(height: 8),
                     TextFormField(
-                      initialValue: userData.name,
+                      initialValue: _currentName,
                       decoration: textInputDecoration.copyWith(
                         hintText: 'User Name',
                         prefixIcon: Icon(
@@ -70,7 +72,7 @@ class _SettingsFormState extends State<SettingsForm> {
                       ),
                       validator:
                           (val) =>
-                              (val?.isEmpty ?? true)
+                              (val == null || val.isEmpty)
                                   ? 'Please Enter a Name'
                                   : null,
                       onChanged: (val) => setState(() => _currentName = val),
@@ -79,21 +81,8 @@ class _SettingsFormState extends State<SettingsForm> {
                 ),
 
                 SizedBox(height: 20),
-                //dropdown
-                /*
-              DropdownButtonFormField(
-                decoration: textInputDecoration,
-                value: _currentSugars ?? '0',
-                items:
-                    sugars.map((sugar) {
-                      return DropdownMenuItem(
-                        value: sugar,
-                        child: Text('$sugar sugars'),
-                      );
-                    }).toList(),
-                onChanged: (val) => setState(() => _currentSugars = val),
-              ),
-              */
+
+                // Sugar preference dropdown
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -106,12 +95,12 @@ class _SettingsFormState extends State<SettingsForm> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    DropdownButtonFormField(
+                    DropdownButtonFormField<String>(
                       decoration: textInputDecoration,
-                      value: _currentSugars ?? userData.sugars,
+                      value: _currentSugars,
                       items:
                           sugars.map((sugar) {
-                            return DropdownMenuItem(
+                            return DropdownMenuItem<String>(
                               value: sugar,
                               child: Text('$sugar sugars'),
                             );
@@ -121,19 +110,9 @@ class _SettingsFormState extends State<SettingsForm> {
                   ],
                 ),
 
-                //slider
-                /*
-              Slider(
-                value: (_currentStrength??100).toDouble(),
-                activeColor: Colors.brown[_currentStrength??100],
-                inactiveColor: Colors.brown[_currentStrength??100],
-                min:100.0,
-                max:900.0,
-                divisions:8,
-                onChanged: (value) => setState(()=>_currentStrength=  value.round()),
-                ),
-                */
                 SizedBox(height: 20),
+
+                // Strength slider
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -146,22 +125,26 @@ class _SettingsFormState extends State<SettingsForm> {
                       ),
                     ),
                     Slider(
-                      value:
-                          ((_currentStrength ?? userData.strength) as int)
-                              .toDouble(),
+                      value: (_currentStrength ?? 100).toDouble(),
                       activeColor:
-                          Colors.brown[(_currentStrength ?? userData.strength)
-                              as int],
+                          Colors.brown[(_currentStrength != null &&
+                                  _currentStrength! >= 100 &&
+                                  _currentStrength! <= 900)
+                              ? _currentStrength!
+                              : 400],
                       inactiveColor:
-                          Colors.brown[(_currentStrength ?? userData.strength)
-                              as int],
-
+                          Colors.brown[(_currentStrength != null &&
+                                  _currentStrength! >= 100 &&
+                                  _currentStrength! <= 900)
+                              ? _currentStrength!
+                              : 200],
                       min: 100.0,
-                      max: 1000.0,
+                      max: 900.0,
                       divisions: 8,
+                      label: '${_currentStrength ?? 100}',
                       onChanged:
-                          (value) =>
-                              setState(() => _currentStrength = value.round()),
+                          (val) =>
+                              setState(() => _currentStrength = val.round()),
                     ),
                     Text(
                       'Strength Level: ${_currentStrength ?? 100}',
@@ -174,13 +157,19 @@ class _SettingsFormState extends State<SettingsForm> {
                   ],
                 ),
 
-                //update button
                 SizedBox(height: 20),
+
+                // Update button
                 TextButton(
                   onPressed: () async {
-                    print(_currentName);
-                    print(_currentSugars);
-                    print(_currentStrength);
+                    if (_formKey.currentState!.validate()) {
+                      await DatabaseService(uid: user.uid).updateUserData(
+                        _currentSugars ?? userData.sugars,
+                        _currentName ?? userData.name,
+                        _currentStrength ?? userData.strength,
+                      );
+                      Navigator.pop(context);
+                    }
                   },
                   style: TextButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 14.0),

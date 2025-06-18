@@ -32,8 +32,32 @@ class DatabaseService {
   }
 
   //user data from sanpshot
+  /*
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
     final data = snapshot.data() as Map<String, dynamic>;
+    return UserData(
+      uid: uid,
+      name: data['name'] ?? '',
+      sugars: data['sugars'] ?? '0',
+      strength: data['strength'] ?? 0,
+    );
+  }
+  */
+  UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
+    if (!snapshot.exists || snapshot.data() == null) {
+      return UserData(uid: uid, name: '', sugars: '0', strength: 100);
+    }
+
+    final data = snapshot.data()! as Map<String, dynamic>;
+
+    // Ensure strength is int, parse if string
+    int strengthValue = 100;
+    if (data['strength'] is int) {
+      strengthValue = data['strength'];
+    } else if (data['strength'] is String) {
+      strengthValue = int.tryParse(data['strength']) ?? 100;
+    }
+
     return UserData(
       uid: uid,
       name: data['name'] ?? '',
