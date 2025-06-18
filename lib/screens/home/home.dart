@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_tea_ghar/models/brew.dart';
+import 'package:my_tea_ghar/screens/home/settings_form.dart';
 import 'package:my_tea_ghar/services/auth.dart';
 import 'package:my_tea_ghar/services/database.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,7 @@ class Home extends StatelessWidget {
               vertical: 20,
               horizontal: 60,
             ),
-            child: Text('bottom sheet'),
+            child: SettingsForm(), 
           );
         },
       );
