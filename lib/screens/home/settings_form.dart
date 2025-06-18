@@ -6,6 +6,8 @@ import 'package:my_tea_ghar/shared/loading.dart';
 import 'package:provider/provider.dart';
 
 class SettingsForm extends StatefulWidget {
+  const SettingsForm({super.key});
+
   @override
   State<SettingsForm> createState() => _SettingsFormState();
 }
