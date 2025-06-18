@@ -21,8 +21,9 @@ class _SettingsFormState extends State<SettingsForm> {
       key: _formKey,
       child: Column(
         children: <Widget>[
-          Text('Update Your Tea Settings.', style: TextStyle(fontSize: 18)),
+          Text('Update Your Coffee Settings.', style: TextStyle(fontSize: 18)),
           SizedBox(height: 20),
+          /*
           TextFormField(
             decoration: textInputDecoration,
             validator:
@@ -30,8 +31,35 @@ class _SettingsFormState extends State<SettingsForm> {
 
             onChanged: (val) => setState(() => _currentName = val),
           ),
+          */
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Your Name',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.brown,
+                ),
+              ),
+              const SizedBox(height: 8),
+              TextFormField(
+                decoration: textInputDecoration.copyWith(
+                  hintText: 'e.g. Dipesh',
+                  prefixIcon: Icon(Icons.person, color: Colors.brown[400]),
+                ),
+                validator:
+                    (val) =>
+                        (val?.isEmpty ?? true) ? 'Please Enter a Name' : null,
+                onChanged: (val) => setState(() => _currentName = val),
+              ),
+            ],
+          ),
+
           SizedBox(height: 20),
           //dropdown
+          /*
           DropdownButtonFormField(
             decoration: textInputDecoration,
             value: _currentSugars ?? '0',
@@ -44,7 +72,80 @@ class _SettingsFormState extends State<SettingsForm> {
                 }).toList(),
             onChanged: (val) => setState(() => _currentSugars = val),
           ),
+          */
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Sugar Preference',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.brown,
+                ),
+              ),
+              const SizedBox(height: 8),
+              DropdownButtonFormField(
+                decoration: textInputDecoration,
+                value: _currentSugars ?? '0',
+                items:
+                    sugars.map((sugar) {
+                      return DropdownMenuItem(
+                        value: sugar,
+                        child: Text('$sugar sugars'),
+                      );
+                    }).toList(),
+                onChanged: (val) => setState(() => _currentSugars = val),
+              ),
+            ],
+          ),
+
           //slider
+          /*
+          Slider(
+            value: (_currentStrength??100).toDouble(),
+            activeColor: Colors.brown[_currentStrength??100],
+            inactiveColor: Colors.brown[_currentStrength??100],
+            min:100.0,
+            max:900.0,
+            divisions:8,
+            onChanged: (value) => setState(()=>_currentStrength=  value.round()),
+            ),
+            */
+          SizedBox(height: 20),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Coffee Strength',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.brown,
+                ),
+              ),
+              Slider(
+                value: (_currentStrength ?? 100).toDouble(),
+                activeColor: Colors.brown[_currentStrength ?? 100],
+                inactiveColor: Colors.brown[_currentStrength ?? 100],
+                min: 100.0,
+                max: 900.0,
+                divisions: 8,
+                onChanged:
+                    (value) => setState(() => _currentStrength = value.round()),
+              ),
+              Text(
+                'Strength Level: ${_currentStrength ?? 100}',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.brown[300],
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ],
+          ),
+
+          //update button
           SizedBox(height: 20),
           TextButton(
             onPressed: () async {
