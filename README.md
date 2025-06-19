@@ -14,7 +14,7 @@ A minimalist Flutter app built while following [The Net Ninja's Flutter Firebase
 
 ---
 
-## 📸 Screenshots
+## 📸 Screenshots (Currently Working on it!)
 
 > Add screenshots in `assets/screenshots/` and link them here:
 <!-- 
@@ -68,7 +68,7 @@ Found a bug, have a suggestion, or want to contribute? Feel free to:
 I'd love to hear your thoughts and improvements to make this project even better!
 
 
-## Live Demo (if any)
+## Live Demo (Currently Working on it!)
 
 ### 1. Prerequisites
 
