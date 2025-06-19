@@ -51,9 +51,11 @@ This app was built by following the excellent **Flutter & Firebase App Build Tut
 Additional thanks to:
 - **Flutter** team for their amazing cross-platform framework
 - **Firebase** team for providing powerful backend services
- 
 
-## License
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
+
 
 ## 💬 Feedback or Contributions
 
