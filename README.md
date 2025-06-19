@@ -37,6 +37,7 @@ A minimalist Flutter app built while following [The Net Ninja's Flutter Firebase
 ## 📁 Project Structure
 
 lib/
+
 ├── main.dart              # App entry point
 
 ├── models/                # User and Brew models
