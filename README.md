@@ -38,10 +38,15 @@ A minimalist Flutter app built while following [The Net Ninja's Flutter Firebase
 
 lib/
 ├── main.dart              # App entry point
+
 ├── models/                # User and Brew models
+
 ├── screens/               # UI screens
+
 ├── services/              # Firebase Auth & Database services
+
 ├── shared/                # Common widgets and constants
+
 └── widgets/               # Custom reusable widgets
 
 ## 🙏 Acknowledgements
