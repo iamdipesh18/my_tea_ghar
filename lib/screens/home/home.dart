@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:my_tea_ghar/models/brew.dart';
 import 'package:my_tea_ghar/models/user.dart';
 import 'package:my_tea_ghar/screens/home/brew_list.dart';

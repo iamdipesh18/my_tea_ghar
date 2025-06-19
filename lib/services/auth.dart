@@ -33,7 +33,7 @@ class AuthService {
 
       return _userFromFirebaseUser(user);
     } catch (e) {
-      print('Error registering: $e');
+// print('Error registering: $e');
       return null;
     }
   }
@@ -51,7 +51,7 @@ class AuthService {
       User? user = result.user;
       return _userFromFirebaseUser(user);
     } catch (e) {
-      print('Error signing in: $e');
+// print('Error signing in: $e');
       return null;
     }
   }
@@ -63,7 +63,7 @@ class AuthService {
       User? user = result.user;
       return _userFromFirebaseUser(user);
     } catch (e) {
-      print('Error signing in anonymously: $e');
+// print('Error signing in anonymously: $e');
       return null;
     }
   }
@@ -73,7 +73,7 @@ class AuthService {
     try {
       await _auth.signOut();
     } catch (e) {
-      print('Error signing out: $e');
+// print('Error signing out: $e');
     }
   }
 }
