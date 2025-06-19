@@ -20,11 +20,11 @@ class _BrewListState extends State<BrewList> {
     if (brews == null) {
       return Center(child: CircularProgressIndicator());
     }
-    for (var brew in brews) {
-// print(brew.name);
-// print(brew.sugars);
-// print(brew.strength);
-    }
+//     for (var brew in brews) {
+// // print(brew.name);
+// // print(brew.sugars);
+// // print(brew.strength);
+//     }
     return ListView.builder(
       itemCount: brews.length,
       itemBuilder: (context, index) {
