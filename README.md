@@ -14,9 +14,7 @@ A minimalist Flutter app built while following [The Net Ninja's Flutter Firebase
 
 ---
 
-## 📸 Screenshots (Currently Working on it!)
-
-> Add screenshots in `assets/screenshots/` and link them here:
+## 📸 Screenshots
 
 ![Login Screen](assets/screenshots/login.png)
 ![Signuo Screen](assets/screenshots/signup.png)
