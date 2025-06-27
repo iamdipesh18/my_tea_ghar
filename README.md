@@ -17,10 +17,14 @@ A minimalist Flutter app built while following [The Net Ninja's Flutter Firebase
 ## 📸 Screenshots (Currently Working on it!)
 
 > Add screenshots in `assets/screenshots/` and link them here:
-<!-- 
+
 ![Login Screen](assets/screenshots/login.png)
+![Signuo Screen](assets/screenshots/signup.png)
+![Loading Screen](assets/screenshots/loading.png)
 ![Home Screen](assets/screenshots/home.png)
--->
+![Edit Screen](assets/screenshots/edit.png)
+
+
 
 ---
 
@@ -73,8 +77,6 @@ Found a bug, have a suggestion, or want to contribute? Feel free to:
 
 I'd love to hear your thoughts and improvements to make this project even better!
 
-
-## Live Demo (Currently Working on it!)
 
 ### 1. Prerequisites
 
